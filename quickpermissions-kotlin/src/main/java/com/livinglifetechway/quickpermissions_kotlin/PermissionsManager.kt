@@ -66,9 +66,9 @@ private fun runWithPermissionsHandler(target: Any?, permissions: Array<out Strin
             // support for AppCompatActivity and Activity
             var permissionCheckerFragment = when (target) {
                 // for support fragment
-                is Fragment -> context.childFragmentManager.findFragmentByTag(PermissionCheckerFragment::class.java.canonicalName) as PermissionCheckerFragment?
+                is Fragment -> target.childFragmentManager.findFragmentByTag(PermissionCheckerFragment::class.java.canonicalName) as PermissionCheckerFragment?
                 // for app compat activity
-                is AppCompatActivity -> context.supportFragmentManager?.findFragmentByTag(PermissionCheckerFragment::class.java.canonicalName) as PermissionCheckerFragment?
+                is AppCompatActivity -> target.supportFragmentManager?.findFragmentByTag(PermissionCheckerFragment::class.java.canonicalName) as PermissionCheckerFragment?
                 // else return null
                 else -> null
             }
@@ -80,21 +80,21 @@ private fun runWithPermissionsHandler(target: Any?, permissions: Array<out Strin
                 permissionCheckerFragment = PermissionCheckerFragment.newInstance()
                 when (target) {
                     is AppCompatActivity -> {
-                        context.supportFragmentManager.beginTransaction().apply {
+                        target.supportFragmentManager.beginTransaction().apply {
                             add(permissionCheckerFragment, PermissionCheckerFragment::class.java.canonicalName)
                             commit()
                         }
                         // make sure fragment is added before we do any context based operations
-                        context.supportFragmentManager?.executePendingTransactions()
+                        target.supportFragmentManager?.executePendingTransactions()
                     }
                     is Fragment -> {
                         // this does not work at the moment
-                        context.childFragmentManager.beginTransaction().apply {
+                        target.childFragmentManager.beginTransaction().apply {
                             add(permissionCheckerFragment, PermissionCheckerFragment::class.java.canonicalName)
                             commit()
                         }
                         // make sure fragment is added before we do any context based operations
-                        context.childFragmentManager.executePendingTransactions()
+                        target.childFragmentManager.executePendingTransactions()
                     }
                 }
             }
