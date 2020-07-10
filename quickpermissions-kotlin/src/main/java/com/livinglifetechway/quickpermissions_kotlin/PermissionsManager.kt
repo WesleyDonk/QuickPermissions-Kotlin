@@ -64,7 +64,7 @@ private fun runWithPermissionsHandler(target: Any?, permissions: Array<out Strin
             // check if we have permission checker fragment already attached
 
             // support for AppCompatActivity and Activity
-            var permissionCheckerFragment = when (context) {
+            var permissionCheckerFragment = when (target) {
                 // for support fragment
                 is Fragment -> context.childFragmentManager.findFragmentByTag(PermissionCheckerFragment::class.java.canonicalName) as PermissionCheckerFragment?
                 // for app compat activity
