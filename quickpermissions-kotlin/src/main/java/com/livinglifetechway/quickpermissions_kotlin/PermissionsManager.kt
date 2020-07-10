@@ -78,7 +78,7 @@ private fun runWithPermissionsHandler(target: Any?, permissions: Array<out Strin
             if (permissionCheckerFragment == null) {
                 Log.d(TAG, "runWithPermissions: adding headless fragment for asking permissions")
                 permissionCheckerFragment = PermissionCheckerFragment.newInstance()
-                when (context) {
+                when (target) {
                     is AppCompatActivity -> {
                         context.supportFragmentManager.beginTransaction().apply {
                             add(permissionCheckerFragment, PermissionCheckerFragment::class.java.canonicalName)
