@@ -46,8 +46,8 @@ private fun runWithPermissionsHandler(target: Any?, permissions: Array<out Strin
         Log.d(TAG, "runWithPermissions: context found")
 
         val context = when (target) {
-            is Context -> target
             is Fragment -> target.context
+            is Context -> target
             else -> null
         }
 
@@ -65,11 +65,11 @@ private fun runWithPermissionsHandler(target: Any?, permissions: Array<out Strin
 
             // support for AppCompatActivity and Activity
             var permissionCheckerFragment = when (context) {
-            // for app compat activity
-                is AppCompatActivity -> context.supportFragmentManager?.findFragmentByTag(PermissionCheckerFragment::class.java.canonicalName) as PermissionCheckerFragment?
-            // for support fragment
+                // for support fragment
                 is Fragment -> context.childFragmentManager.findFragmentByTag(PermissionCheckerFragment::class.java.canonicalName) as PermissionCheckerFragment?
-            // else return null
+                // for app compat activity
+                is AppCompatActivity -> context.supportFragmentManager?.findFragmentByTag(PermissionCheckerFragment::class.java.canonicalName) as PermissionCheckerFragment?
+                // else return null
                 else -> null
             }
 
